@@ -1,0 +1,22 @@
+function storedXML(name, user = "", nonce = "", hash = "", portNumber = "") {
+  switch (name) {
+    case "capabilityRequestMessage":
+      return '<?xml version="1.0" encoding="utf-8"?>\n<soap:Envelope\nxmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"\nxmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >\n    <soap:Header></soap:Header>\n    <soap:Body>\n        <capability:capabilityRequestMessage\nxmlns:capability=\n"http://www.nivettisystems.com/webservice/operational/capabilityRequestMessage">\n            <capability>\n                <release>\n                    <version>\n                        <major>1</major>\n                        <minor>0</minor>\n                    </version>\n                </release>\n                <authentication>md5-digest</authentication>\n            </capability>\n        </capability:capabilityRequestMessage>\n    </soap:Body>\n</soap:Envelope>';
+    case "authRequestRequestMessage":
+      return `<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ><soap:Header></soap:Header><soap:Body><authRequest:authRequestRequestMessage xmlns:authRequest="http://www.nivettisystems.com/webservice/operational/authRequestRequestMessage"><username>${user}</username></authRequest:authRequestRequestMessage></soap:Body></soap:Envelope>`;
+    case "authChallengeRequestRequestMessage":
+      return `<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ><soap:Header></soap:Header><soap:Body><authChallengeRequest:authChallengeRequestRequestMessage xmlns:authChallengeRequest="http://www.nivettisystems.com/webservice/operational/authChallengeRequestRequestMessage"><userName>${user}</userName><nonce>${nonce}</nonce><response>${hash}</response></authChallengeRequest:authChallengeRequestRequestMessage></soap:Body></soap:Envelope>`;
+    case "gigabitEthernetDetailsRequestMessage":
+      return `<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ><soap:Body><gigabitEthernetDetails:gigabitEthernetDetailsRequestMessage xmlns:gigabitEthernetDetails="http://www.nivettisystems.com/webservice/operational/gigabitEthernetDetailsRequestMessage"><port><shelf>shelf-1</shelf><slot><slotId>active-controller</slotId><subSlotId>base-slot</subSlotId></slot><portId>port-${portNumber}</portId></port></gigabitEthernetDetails:gigabitEthernetDetailsRequestMessage></soap:Body></soap:Envelope>`;
+    case "consoleDetailsRequestMessage":
+      return `<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ><soap:Body><consoleDetails:consoleDetailsRequestMessage xmlns:consoleDetails="http://www.nivettisystems.com/webservice/operational/consoleDetailsRequestMessage"><port><shelf>shelf-1</shelf><slot><slotId>active-controller</slotId><subSlotId>base-slot</subSlotId></slot><portId>port-${portNumber}</portId></port></consoleDetails:consoleDetailsRequestMessage></soap:Body></soap:Envelope>`;
+    case "getSystemRequestMessage":
+      return `<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ><soap:Body><getSystemParameterGroupInstanceOperation:getSystemRequestMessage xmlns:getSystemParameterGroupInstanceOperation = "http://www.nivettisystems.com/webservice/configuration/getSystemRequestMessage"></getSystemParameterGroupInstanceOperation:getSystemRequestMessage></soap:Body></soap:Envelope>`;
+    case "modifySystemRequestMessage":
+      return `<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ><soap:Body><modifySystemParameterGroupInstanceOperation:modifySystemRequestMessage xmlns:modifySystemParameterGroupInstanceOperation = "http://www.nivettisystems.com/webservice/configuration/modifySystemRequestMessage">${SOAPBody}</modifySystemParameterGroupInstanceOperation:modifySystemRequestMessage></soap:Body></soap:Envelope>`;
+    default:
+      break;
+  }
+}
+
+module.exports = storedXML;
